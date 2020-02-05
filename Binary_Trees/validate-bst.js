@@ -3,17 +3,15 @@
 const BinaryTree = require('./Binary-Tree');
 const BTNode = require('./Node');
 
-function isBST(node){
- if(!node.left && !node.right){
+function isBST(node, max = Number.MAX_SAFE_INTEGER, min = Number.MIN_SAFE_INTEGER){
+ if(!node){
    return true;
  }
- else if (node.left && node.left.value < node.value){
-   return isBST(node.left);
- } else if (node.right && node.right.value > node.value){
-   return isBST(node.right);
- } else {
+ if(node.value < min || node.value > max){
    return false;
  }
+ return isBST(node.left, node.value, min) && isBST(node.right, max, node.value)
+
 }
 
 let tree = new BinaryTree();
@@ -34,7 +32,7 @@ ten.right = twenty;
 ten.left = four;
 four.right = five;
 four.left = three;
-// three.left = six;
+//three.left = six; //makes tree false
 twenty.right = thirty;
 twenty.left = fifteen;
 thirty.right = forty;
